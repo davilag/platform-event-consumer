@@ -1,14 +1,26 @@
 import cometD from 'cometd';
 import adapter from 'cometd-nodejs-client';
+import { exec } from 'child_process';
 import { OAuth, UsernamePasswordConfig } from 'ts-force';
 
+class AuthenticationInfo {
+  accessToken: string;
+
+  sfURL: string;
+
+  constructor(accessToken:string, sfURL:string) {
+    this.accessToken = accessToken;
+    this.sfURL = sfURL;
+  }
+}
 const authenticate = async (
   username: string,
   password: string,
   accessToken: string,
   loginURL: string,
   clientSecret: string,
-  clientId: string) => {
+  clientId: string,
+) => {
   const config = new UsernamePasswordConfig(
     clientId,
     clientSecret,
@@ -18,12 +30,27 @@ const authenticate = async (
   );
 
   const oAuth = new OAuth(config);
-  return oAuth.initialize();
+  const auth = await oAuth.initialize();
+  return new AuthenticationInfo(auth.accessToken, auth.instanceUrl);
 };
 
+const sfdxAuthenticate = async (
+  username: string,
+) => new Promise<AuthenticationInfo>((resolve, reject) => {
+  exec(`sfdx force:org:display --targetusername ${username} --json`, (error, stdout, stderror) => {
+    if (error) {
+      console.warn(error);
+    }
+    if (!stdout) {
+      reject(stderror);
+    }
+    const out = JSON.parse(stdout);
+    resolve(new AuthenticationInfo(out.result.accessToken, out.result.instanceUrl));
+  });
+});
+
 const subscribe = (
-  accessToken: string,
-  sfURL: string,
+  sfAuthInfo: AuthenticationInfo,
   event: string,
 ) => {
   adapter.adapt();
@@ -32,9 +59,9 @@ const subscribe = (
 
   // Configure the CometD object.
   cometd.configure({
-    url: `${sfURL}/cometd/48.0/`,
+    url: `${sfAuthInfo.sfURL}/cometd/48.0/`,
     appendMessageTypeToURL: false,
-    requestHeaders: { Authorization: `OAuth ${accessToken}` },
+    requestHeaders: { Authorization: `OAuth ${sfAuthInfo.accessToken}` },
   });
 
   // Handshake with the server.
@@ -56,4 +83,5 @@ const subscribe = (
 export {
   authenticate,
   subscribe,
+  sfdxAuthenticate,
 };
