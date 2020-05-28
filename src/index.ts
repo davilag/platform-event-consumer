@@ -11,14 +11,7 @@ if (!event) {
   throw Error('Expected Platform Event in the --event parameter');
 }
 
-if (username) {
-  console.info('Authenticating using SFDX config...');
-  sfdxAuthenticate(username)
-    .then((auth) => {
-      subscribe(auth, event);
-    })
-    .catch(() => console.error('Couldn\'t get user information'));
-} else if (environment) {
+if (environment) {
   console.info('Authenticating environment variables...');
   authenticate(
     process.env.SF_USERNAME!,
@@ -31,6 +24,13 @@ if (username) {
     .then((auth) => {
       subscribe(auth, event);
     });
+} else if (username) {
+  console.info('Authenticating using SFDX config...');
+  sfdxAuthenticate(username)
+    .then((auth) => {
+      subscribe(auth, event);
+    })
+    .catch(() => console.error('Couldn\'t get user information'));
 } else {
   throw Error('Expected --username or --env flag to authenticate with Salesforce');
 }
