@@ -13,9 +13,11 @@
   "license": "ISC",
   "dependencies": {
     "@salesforce/ts-types": "^1.2.2",
+    "@types/minimist": "^1.2.0",
     "@types/node": "^14.0.5",
     "cometd": "^5.0.0",
     "cometd-nodejs-client": "^1.1.0",
+    "minimist": "^1.2.5",
     "ts-force": "^3.0.0-rc.3"
   },
   "devDependencies": {
