@@ -1,8 +1,8 @@
 {
   "name": "platform-event-consumer",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "description": "A package to consume Platform Events from Salesforce",
-  "main": "index.ts",
+  "main": "dist/index.js",
   "scripts": {
     "build": "rm -rf ./dist && tsc",
     "lint": "eslint --ext .ts .",
@@ -13,11 +13,10 @@
   "license": "ISC",
   "dependencies": {
     "@salesforce/ts-types": "^1.2.2",
-    "@types/minimist": "^1.2.0",
     "@types/node": "^14.0.5",
     "cometd": "^5.0.0",
     "cometd-nodejs-client": "^1.1.0",
-    "minimist": "^1.2.5",
+    "commander": "^5.1.0",
     "ts-force": "^3.0.0-rc.3"
   },
   "devDependencies": {
@@ -31,5 +30,8 @@
     "jest": "^26.0.1",
     "json-schema": "^0.2.5",
     "typescript": "^3.8.3"
+  },
+  "bin": {
+    "platform-event-consumer": "./bin/platform-event-consumer"
   }
 }

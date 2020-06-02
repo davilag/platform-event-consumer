@@ -8,7 +8,7 @@ class AuthenticationInfo {
 
   sfURL: string;
 
-  constructor(accessToken:string, sfURL:string) {
+  constructor(accessToken: string, sfURL: string) {
     this.accessToken = accessToken;
     this.sfURL = sfURL;
   }
@@ -53,6 +53,7 @@ const subscribe = (
   sfAuthInfo: AuthenticationInfo,
   event: string,
 ) => {
+  console.log(event);
   adapter.adapt();
   // Create the CometD object.
   const cometd = new cometD.CometD();

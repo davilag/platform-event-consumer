@@ -1,17 +1,14 @@
-import minimist from 'minimist';
+import { program } from 'commander';
 import { subscribe, sfdxAuthenticate, authenticate } from './sf';
 
-const cliParams = minimist(process.argv.slice(2));
+program
+  .requiredOption('-e, --event <event>', 'Event that we want to consume')
+  .option('--env', 'Flag to get the auth details from the environment variables')
+  .option('-u, --username <username>', 'Username of the Salesforce org from which we want to consume events. You will need to authenticate to that org first using SFDX.');
 
-const event = cliParams.e || cliParams.event;
-const environment = cliParams.env;
-const username = cliParams.u || cliParams.username;
+program.parse(process.argv);
 
-if (!event) {
-  throw Error('Expected Platform Event in the --event parameter');
-}
-
-if (environment) {
+if (program.env) {
   console.info('Authenticating environment variables...');
   authenticate(
     process.env.SF_USERNAME!,
@@ -22,13 +19,13 @@ if (environment) {
     process.env.SF_CLIENT_ID!,
   )
     .then((auth) => {
-      subscribe(auth, event);
+      subscribe(auth, program.event);
     });
-} else if (username) {
+} else if (program.username) {
   console.info('Authenticating using SFDX config...');
-  sfdxAuthenticate(username)
+  sfdxAuthenticate(program.username)
     .then((auth) => {
-      subscribe(auth, event);
+      subscribe(auth, program.event);
     })
     .catch(() => console.error('Couldn\'t get user information'));
 } else {
