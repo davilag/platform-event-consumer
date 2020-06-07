@@ -1,4 +1,6 @@
 # Platform event consumer
+![CI](https://github.com/davilag/platform-event-consumer/workflows/CI/badge.svg)
+
 Script to consume platform events from a Salesforce org.
 
 ## How to install
