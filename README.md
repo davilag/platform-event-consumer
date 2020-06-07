@@ -1,7 +1,8 @@
 # Platform event consumer
 ![CI](https://github.com/davilag/platform-event-consumer/workflows/CI/badge.svg)
+[![NPM version](https://badge.fury.io/js/platform-event-consumer.svg)](http://badge.fury.io/js/platform-event-consumer)
 
-Script to consume platform events from a Salesforce org.
+CLI tool to consume platform events from a Salesforce org.
 
 ## How to install
 Install the CLI tool using yarn or npm:
