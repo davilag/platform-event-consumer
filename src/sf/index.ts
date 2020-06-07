@@ -53,7 +53,6 @@ const subscribe = (
   sfAuthInfo: AuthenticationInfo,
   event: string,
 ) => {
-  console.log(event);
   adapter.adapt();
   // Create the CometD object.
   const cometd = new cometD.CometD();
@@ -71,7 +70,7 @@ const subscribe = (
       console.error('Unsuccessful handshake');
     }
 
-    console.log('Handshake succesful');
+    console.log(`Handshake succesful, consuming ${event}`);
     // Subscribe to receive messages from the server.
     cometd.subscribe(`/event/${event}`, (m) => {
       const dataFromServer = m.data;
