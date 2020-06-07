@@ -3,7 +3,7 @@ import adapter from 'cometd-nodejs-client';
 import { exec } from 'child_process';
 import { OAuth, UsernamePasswordConfig } from 'ts-force';
 
-class AuthenticationInfo {
+export class AuthenticationInfo {
   accessToken: string;
 
   sfURL: string;
@@ -43,6 +43,7 @@ const sfdxAuthenticate = async (
     }
     if (!stdout) {
       reject(stderror);
+      return;
     }
     const out = JSON.parse(stdout);
     resolve(new AuthenticationInfo(out.result.accessToken, out.result.instanceUrl));

@@ -15,6 +15,8 @@ module.exports = {
   },
   rules: {
     'import/extensions': ['off'],
+    'no-unused-vars': ['off'],
+    'no-console': ['off'],
     'import/no-extraneous-dependencies': ['error', {
       devDependencies: [
         '**/__tests__/*',
