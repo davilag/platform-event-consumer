@@ -10,7 +10,7 @@ Install the CLI tool using yarn or npm:
 yarn add global platform-event-consumer
 ```
 
-## How to run the script
+## How to run
 The script accepts different arguments:
 
 - `-e, --event <event>`: Event that we want to consume.
