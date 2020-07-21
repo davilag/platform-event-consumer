@@ -1,6 +1,6 @@
 {
   "name": "platform-event-consumer",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A package to consume Platform Events from Salesforce",
   "main": "dist/index.js",
   "scripts": {
@@ -9,7 +9,8 @@
     "start": "node dist/index.js",
     "test": "jest"
   },
-  "author": "",
+  "author": "David Avila",
+  "repository": "https://github.com/davilag/platform-event-consumer",
   "license": "ISC",
   "dependencies": {
     "cometd": "^5.0.0",
